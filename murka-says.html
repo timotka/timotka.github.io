@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Мурка каже</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: black;
+      color: lime;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .ascii {
+      white-space: pre;
+      font-size: 14px;
+      margin-top: 1rem;
+    }
+
+    .command {
+      font-size: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .buttons button {
+      background-color: #111;
+      border: 1px solid lime;
+      color: lime;
+      padding: 1rem;
+      margin: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .buttons button:hover {
+      background-color: lime;
+      color: black;
+    }
+
+    .result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🐾 Мурка каже</h1>
+  <div class="ascii" id="murka">
+<pre>
+   |\__/|
+  ( @_@ )   < Мяу...
+   > ∀ <
+</pre>
+  </div>
+  <div class="command" id="command">Завантаження команди...</div>
+  <div class="buttons">
+    <button onclick="respond('мурчати')">Мурчати</button>
+    <button onclick="respond('дряпати')">Дряпати</button>
+    <button onclick="respond('мяукати')">Мяукати</button>
+    <button onclick="respond('нічого')">Нічого не робити</button>
+  </div>
+  <div class="result" id="result"></div>
+
+  <script>
+    const actions = ['мурчати', 'дряпати', 'мяукати'];
+
+    const murkaFaces = {
+      success: `   |\\__/|\n  ( ^ w ^ )   < Мяу~\n   > ︶ <`,
+      fail:    `   |\\__/|\n  ( >_< )   < Мяу?!\n   > д <`,
+      idle:    `   |\\__/|\n  ( @_@ )   < Мяу...\n   > ∀ <`
+    };
+
+    let currentAction = '';
+    let isMurkaSaid = false;
+
+    function newCommand() {
+      const action = actions[Math.floor(Math.random() * actions.length)];
+      isMurkaSaid = Math.random() < 0.7;
+      currentAction = action;
+      document.getElementById('command').innerText =
+        (isMurkaSaid ? 'Мурка каже: ' : '') + capitalize(action) + '!';
+      document.getElementById('result').innerText = '';
+      updateMurka('idle');
+    }
+
+    function respond(playerChoice) {
+      let outcome;
+
+      if (playerChoice === currentAction && isMurkaSaid) {
+        document.getElementById('result').innerText = '✅ Правильно, мур-мур!';
+        outcome = 'success';
+      } else if (playerChoice === currentAction && !isMurkaSaid) {
+        document.getElementById('result').innerText = '❌ Ні! Мурка ж не казала!';
+        outcome = 'fail';
+      } else if (playerChoice !== currentAction && isMurkaSaid) {
+        document.getElementById('result').innerText = '❌ Ти не послухав Мурку...';
+        outcome = 'fail';
+      } else {
+        document.getElementById('result').innerText = '✅ Молодець, не повівся!';
+        outcome = 'success';
+      }
+
+      updateMurka(outcome);
+      setTimeout(newCommand, 1500);
+    }
+
+    function updateMurka(state) {
+      document.getElementById('murka').innerHTML = `<pre>${murkaFaces[state]}</pre>`;
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    newCommand();
+  </script>
+</body>
+</html>
