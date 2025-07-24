@@ -44,6 +44,21 @@
       border-top: 1px dashed #0f0;
       margin: 2rem 0;
     }
+
+    button {
+      background-color: #222;
+      border: 1px solid lime;
+      color: lime;
+      padding: 0.5rem 1rem;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #0f0;
+      color: black;
+    }
   </style>
 </head>
 <body>
@@ -86,12 +101,28 @@
 
   <hr>
 
+  <h2>🐱 Мурка Бобрівна</h2>
+  <div class="section">
+    <div class="ascii" id="cat">
+<pre>
+   |\__/| 
+  ( o.o )   < Я спостерігаю
+   > ^ <
+</pre>
+    </div>
+    <button onclick="talkToCat()">Поговорити з Муркою</button>
+    <p id="cat-quote" style="margin-top: 1rem;"></p>
+  </div>
+
+  <hr>
+
   <h2>🤫 P.S.</h2>
   <div class="section">
     <p>Можливо, тут буде маніфест. Або ASCII-динозавр. Або і те, й інше. Stay tuned.</p>
   </div>
 
   <script>
+    // Таймер релізу
     const releaseDate = new Date("2025-12-01T00:00:00").getTime();
     const timer = document.getElementById("countdown");
 
@@ -106,6 +137,46 @@
 
       timer.innerText = `Реліз через: ${days}д ${hours}г ${minutes}хв ${seconds}с`;
     }, 1000);
+
+    // Мурка говорить
+    function talkToCat() {
+      const catQuotes = [
+        "Мяу. Я тут головна.",
+        "Прокрастинація — це теж праця, просто в іншому напрямку.",
+        "Ти дивишся на мене? А я — на тебе.",
+        "Бобри — мої союзники. Люди — експеримент.",
+        "Сон — це код, що компілює мрії.",
+        "Я обчислюю кількість риб в екзистенції..."
+      ];
+
+      const catFaces = [
+`   |\\__/| 
+  ( o.o )   < Я спостерігаю
+   > ^ <`,
+
+`   |\\__/| 
+  ( -.- )   < Мяу...  
+   > ⌣ <`,
+
+`   |\\__/| 
+  ( ⚆_⚆ )   < Що ти щойно сказав?  
+   > ▃ <`,
+
+`   |\\__/| 
+  ( ^ w ^ )  < Мурр~  
+   > ︶ <`,
+
+`   |\\__/| 
+  ( >_< )   < Я все знаю  
+   > ω <`
+      ];
+
+      const quote = catQuotes[Math.floor(Math.random() * catQuotes.length)];
+      const face = catFaces[Math.floor(Math.random() * catFaces.length)];
+
+      document.getElementById("cat").innerHTML = `<pre>${face}</pre>`;
+      document.getElementById("cat-quote").innerText = quote;
+    }
   </script>
 
 </body>
