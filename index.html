@@ -1,9 +1,8 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Тімотька: Сингулярний Вибух</title>
+  <title>Тімотька — Сингулярна Візія</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <style>
     body {
@@ -11,70 +10,103 @@
       color: lime;
       font-family: 'Share Tech Mono', monospace;
       padding: 2rem;
+      line-height: 1.6;
     }
-    h1 {
-      font-size: 3rem;
-      animation: blink 1s step-start infinite;
+
+    h1, h2 {
+      border-bottom: 1px solid lime;
+      padding-bottom: 0.3em;
+      margin-top: 2em;
     }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
+
     a {
       color: cyan;
       text-decoration: none;
     }
+
     .ascii {
       white-space: pre;
       font-size: 12px;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
+
     .timer {
-      font-size: 2rem;
-      margin-top: 2rem;
+      font-size: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px dashed #0f0;
+      margin: 2rem 0;
     }
   </style>
 </head>
 <body>
 
-<h1>👁️‍🗨️ Ласкаво прошу, допитливий 👾</h1>
+  <h1>👾 Тімотька Online</h1>
+  <div class="section">
+    <p>Тут буде щось. Можливо, гра. Можливо, просто звук *веб-тишини*.</p>
+  </div>
 
-<p>Тут буде щось. Можливо, гра. Можливо, просто нічого.</p>
+  <hr>
 
-<div class="ascii">
+  <h2>🧠 ASCII-нагляд</h2>
+  <div class="ascii">
 <pre>
    |\__/| 
-  ( o.o )   < Я слідкую
+  ( o.o )   < Я спостерігаю
    > ^ <
 </pre>
-</div>
+  </div>
 
-<div class="timer" id="countdown">
-  ⌛ Реліз через: ... 
-</div>
+  <hr>
 
-<p>
-  🔗 <a href="https://t.me/yourchannel" target="_blank">Telegram</a> |
-  📺 <a href="https://youtube.com/@yourchannel" target="_blank">YouTube</a> |
-  💬 <a href="https://discord.gg/yourlink" target="_blank">Discord</a>
-</p>
+  <h2>⏳ Зворотний відлік</h2>
+  <div class="section">
+    <div class="timer" id="countdown">
+      Реліз через: ...
+    </div>
+  </div>
 
-<script>
-// Таймер до майбутньої дати
-const releaseDate = new Date("2025-12-01T00:00:00").getTime();
-const timer = document.getElementById("countdown");
+  <hr>
 
-setInterval(() => {
-  const now = new Date().getTime();
-  const diff = releaseDate - now;
+  <h2>🔗 Соцмережі</h2>
+  <div class="section">
+    <p>
+      ➡️ <a href="https://t.me/yourchannel" target="_blank">Telegram</a><br>
+      ➡️ <a href="https://youtube.com/@yourchannel" target="_blank">YouTube</a><br>
+      ➡️ <a href="https://discord.gg/yourlink" target="_blank">Discord</a>
+    </p>
+  </div>
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
+  <hr>
 
-  timer.innerText = `⌛ Реліз через: ${days}д ${hours}г ${minutes}хв ${seconds}с`;
-}, 1000);
-</script>
+  <h2>🤫 P.S.</h2>
+  <div class="section">
+    <p>Можливо, тут буде маніфест. Або ASCII-динозавр. Або і те, й інше. Stay tuned.</p>
+  </div>
+
+  <script>
+    const releaseDate = new Date("2025-12-01T00:00:00").getTime();
+    const timer = document.getElementById("countdown");
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const diff = releaseDate - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      timer.innerText = `Реліз через: ${days}д ${hours}г ${minutes}хв ${seconds}с`;
+    }, 1000);
+  </script>
 
 </body>
 </html>
