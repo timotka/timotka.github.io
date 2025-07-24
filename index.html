@@ -199,6 +199,20 @@
       document.getElementById("cat").innerHTML = `<pre>${catFaces[i]}</pre>`;
       document.getElementById("cat-interpretation").innerText = interpretations[i];
     }
+
+    // 🎲 Рандомна назва вкладки
+  const titles = [
+    "Тімотька",
+    "Мурка — наш бог",
+    "Лапа. Рука. Мурка.",
+    "Сайт зробився сам...",
+    "Вона за тобою.",
+    "Мурка",
+    "Бурка Момрівна",
+    "Гіфки нема, але є Мурка"
+  ];
+
+  document.title = titles[Math.floor(Math.random() * titles.length)];
   </script>
 
 </body>
