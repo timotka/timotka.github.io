@@ -1,11 +1,80 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <title>Тімотька — старт</title>
+  <meta charset="UTF-8">
+  <title>Тімотька: Сингулярний Вибух</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: black;
+      color: lime;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 3rem;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    a {
+      color: cyan;
+      text-decoration: none;
+    }
+    .ascii {
+      white-space: pre;
+      font-size: 12px;
+      margin-top: 2rem;
+    }
+    .timer {
+      font-size: 2rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Привіт, це мій перший сайт!</h1>
-  <p>Я тут вчуся кодувати і це круто!</p>
+
+<h1>👁️‍🗨️ Ласкаво прошу, допитливий 👾</h1>
+
+<p>Тут буде щось. Можливо, гра. Можливо, просто нічого.</p>
+
+<div class="ascii">
+<pre>
+   |\__/| 
+  ( o.o )   < Я слідкую
+   > ^ <
+</pre>
+</div>
+
+<div class="timer" id="countdown">
+  ⌛ Реліз через: ... 
+</div>
+
+<p>
+  🔗 <a href="https://t.me/yourchannel" target="_blank">Telegram</a> |
+  📺 <a href="https://youtube.com/@yourchannel" target="_blank">YouTube</a> |
+  💬 <a href="https://discord.gg/yourlink" target="_blank">Discord</a>
+</p>
+
+<script>
+// Таймер до майбутньої дати
+const releaseDate = new Date("2025-12-01T00:00:00").getTime();
+const timer = document.getElementById("countdown");
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = releaseDate - now;
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  timer.innerText = `⌛ Реліз через: ${days}д ${hours}г ${minutes}хв ${seconds}с`;
+}, 1000);
+</script>
+
 </body>
 </html>
