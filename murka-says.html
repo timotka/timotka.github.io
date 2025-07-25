@@ -22,11 +22,12 @@
       white-space: pre;
       font-size: 14px;
       margin-top: 1rem;
+      line-height: 1.2;
     }
 
     .command {
       font-size: 1.5rem;
-      margin: 2rem 0;
+      margin: 2rem 0 1rem;
     }
 
     .buttons button {
@@ -34,9 +35,10 @@
       border: 1px solid lime;
       color: lime;
       padding: 1rem;
-      margin: 1rem;
+      margin: 0.5rem;
       font-size: 1rem;
       cursor: pointer;
+      min-width: 120px;
     }
 
     .buttons button:hover {
@@ -44,9 +46,19 @@
       color: black;
     }
 
-    .result, .scoreboard {
-      margin-top: 2rem;
+    .result {
+      margin-top: 1rem;
       font-size: 1.2rem;
+    }
+
+    .scoreboard {
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .timer {
+      font-size: 1.2rem;
+      margin-top: 1rem;
     }
   </style>
 </head>
@@ -66,96 +78,103 @@
   <div class="scoreboard">
     ❤️ Життя: <span id="lives">3</span> | ⭐ Очки: <span id="score">0</span>
   </div>
+  <div class="timer" id="timer">⏳ 5.0 сек</div>
 
   <script>
     const allActions = [
-      'мурчати', 'дряпати', 'мяукати', 'стрибати', 'пити молоко', 'дивитися в стіну',
-      'лизати лапу', 'гойдатися', 'висіти на шторах', 'задрімати', 'шипіти', 'полювати на ніщо'
+      'мурчати', 'дряпати', 'мяукати', 'стерегти',
+      'плигати', 'ховатись', 'вилизуватись', 'дивитись в стіну',
+      'переписувати код', 'котитися', 'дивитись в тебе', 'читати думки'
     ];
 
     const murkaFaces = {
-      success: `   |\__/|\n  ( ^ w ^ )   < Мяу~\n   > ︶ <`,
-      fail:    `   |\__/|\n  ( >_< )   < Мяу?!\n   > д <`,
-      idle:    `   |\__/|\n  ( @_@ )   < Мяу...\n   > ∀ <`
+      success: `   |\\__/|\n  ( ^ w ^ )   < Мяу~\n   > ︶ <`,
+      fail:    `   |\\__/|\n  ( >_< )   < Мяу?!\n   > д <`,
+      idle:    `   |\\__/|\n  ( @_@ )   < Мяу...\n   > ∀ <`
     };
 
     let currentAction = '';
     let isMurkaSaid = false;
-    let lives = 3;
     let score = 0;
-    let timeLimit = 5000;
-    let timeoutId;
+    let lives = 3;
+    let timerValue = 5.0;
+    let interval;
 
-    function shuffle(array) {
-      const arr = array.slice();
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
+    function getRandomActions(count) {
+      const shuffled = allActions.sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
     }
 
     function newCommand() {
-      clearTimeout(timeoutId);
+      clearInterval(interval);
 
-      const shuffledActions = shuffle(allActions);
-      const buttonActions = shuffledActions.slice(0, 4);
-      currentAction = buttonActions[Math.floor(Math.random() * buttonActions.length)];
+      if (lives <= 0) return;
+
+      timerValue = 5.0;
+      updateTimer();
+
+      const actions = getRandomActions(4);
+      currentAction = actions[Math.floor(Math.random() * actions.length)];
       isMurkaSaid = Math.random() < 0.7;
 
-      const cmdText = (isMurkaSaid ? 'Мурка каже: ' : '') + capitalize(currentAction) + '!';
-      document.getElementById('command').innerText = cmdText;
+      document.getElementById('command').innerText =
+        (isMurkaSaid ? 'Мурка каже: ' : '') + capitalize(currentAction) + '!';
       document.getElementById('result').innerText = '';
       updateMurka('idle');
 
-      const buttonsDiv = document.getElementById('buttons');
-      buttonsDiv.innerHTML = '';
-      buttonActions.forEach(action => {
+      const buttonsContainer = document.getElementById('buttons');
+      buttonsContainer.innerHTML = '';
+      actions.forEach(action => {
         const btn = document.createElement('button');
         btn.innerText = capitalize(action);
         btn.onclick = () => respond(action);
-        buttonsDiv.appendChild(btn);
+        buttonsContainer.appendChild(btn);
       });
 
-      timeoutId = setTimeout(() => {
-        loseLife('⏱️ Запізно! Мурка не чекатиме вічно.');
-      }, timeLimit);
+      interval = setInterval(() => {
+        timerValue -= 0.1;
+        updateTimer();
+        if (timerValue <= 0) {
+          clearInterval(interval);
+          failTurn('⏰ Занадто повільно!');
+        }
+      }, 100);
     }
 
     function respond(playerChoice) {
-      clearTimeout(timeoutId);
-      let outcome;
+      clearInterval(interval);
 
+      let outcome;
       if (playerChoice === currentAction && isMurkaSaid) {
-        score++;
-        if (timeLimit > 2000) timeLimit -= 300;
         document.getElementById('result').innerText = '✅ Правильно, мур-мур!';
+        score++;
         outcome = 'success';
       } else if (playerChoice === currentAction && !isMurkaSaid) {
-        loseLife('❌ Мурка не казала!');
-        outcome = 'fail';
+        failTurn('❌ Мурка ж не казала!');
+        return;
       } else if (playerChoice !== currentAction && isMurkaSaid) {
-        loseLife('❌ Ти не послухав Мурку...');
-        outcome = 'fail';
+        failTurn('❌ Ти не послухав Мурку...');
+        return;
       } else {
-        score++;
-        if (timeLimit > 2000) timeLimit -= 300;
         document.getElementById('result').innerText = '✅ Молодець, не повівся!';
+        score++;
         outcome = 'success';
       }
 
       updateMurka(outcome);
-      updateScoreboard();
-      if (lives > 0) setTimeout(newCommand, 1500);
+      updateStats();
+      setTimeout(newCommand, 1500);
     }
 
-    function loseLife(message) {
-      lives--;
+    function failTurn(message) {
       document.getElementById('result').innerText = message;
-      updateScoreboard();
-      if (lives <= 0) {
-        document.getElementById('command').innerText = '💀 Гру завершено';
-        document.getElementById('buttons').innerHTML = '';
+      updateMurka('fail');
+      lives--;
+      updateStats();
+      if (lives > 0) {
+        setTimeout(newCommand, 1500);
+      } else {
+        document.getElementById('command').innerText = '💀 Гру закінчено';
       }
     }
 
@@ -163,9 +182,13 @@
       document.getElementById('murka').innerHTML = `<pre>${murkaFaces[state]}</pre>`;
     }
 
-    function updateScoreboard() {
-      document.getElementById('lives').innerText = lives;
+    function updateStats() {
       document.getElementById('score').innerText = score;
+      document.getElementById('lives').innerText = lives;
+    }
+
+    function updateTimer() {
+      document.getElementById('timer').innerText = `⏳ ${timerValue.toFixed(1)} сек`;
     }
 
     function capitalize(str) {
