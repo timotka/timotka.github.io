@@ -23,6 +23,10 @@
       font-size: 14px;
       margin-top: 1rem;
       line-height: 1.2;
+      border: 1px dashed lime;
+      display: inline-block;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
     }
 
     .command {
@@ -30,12 +34,19 @@
       margin: 2rem 0 1rem;
     }
 
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
     .buttons button {
       background-color: #111;
       border: 1px solid lime;
       color: lime;
       padding: 1rem;
-      margin: 0.5rem;
       font-size: 1rem;
       cursor: pointer;
       min-width: 120px;
@@ -65,13 +76,7 @@
 <body>
 
   <h1>🐾 Мурка каже</h1>
-  <div class="ascii" id="murka">
-<pre>
-   |\__/|
-  ( @_@ )   < Мяу...
-   > ∀ <
-</pre>
-  </div>
+  <div class="ascii" id="murka"></div>
   <div class="command" id="command">Завантаження команди...</div>
   <div class="buttons" id="buttons"></div>
   <div class="result" id="result"></div>
@@ -101,7 +106,7 @@
     let interval;
 
     function getRandomActions(count) {
-      const shuffled = allActions.sort(() => 0.5 - Math.random());
+      const shuffled = [...allActions].sort(() => 0.5 - Math.random());
       return shuffled.slice(0, count);
     }
 
