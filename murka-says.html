@@ -176,7 +176,7 @@
         updateTimer();
         if (timerValue <= 0) {
           clearInterval(interval);
-          failTurn('⏰ Занадто повільно!');
+          failTurn('⏰ Занадто повільно!', true);
         }
       }, 100);
     }
@@ -186,7 +186,7 @@
 
       let outcome;
       if (playerChoice === currentAction && isMurkaSaid) {
-        document.getElementById('result').innerText = '✅ Правильно, мур-мур!';
+        document.getElementById('result').innerText = '✅ Правильно!';
         score++;
         outcome = 'success';
       } else if (playerChoice === currentAction && !isMurkaSaid) {
@@ -206,26 +206,27 @@
       setTimeout(newCommand, 1500);
     }
 
-    function failTurn(message) {
+    function failTurn(message, isTimeout = false) {
       document.getElementById('result').innerText = message;
       updateMurka('fail');
       lives--;
       updateStats();
+
       if (lives > 0) {
         setTimeout(newCommand, 1500);
       } else {
         document.getElementById('command').innerText = '💀 Гру закінчено';
+      }
 
-        if (Math.random() < 0.1) {
-          const jack = document.getElementById('jackenstein');
-          const sound = document.getElementById('jackSound');
-          jack.style.display = 'block';
-          jack.classList.add('attack');
-          sound.play();
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 2500);
-        }
+      if (isTimeout && Math.random() < 0.3) {
+        const jack = document.getElementById('jackenstein');
+        const sound = document.getElementById('jackSound');
+        jack.style.display = 'block';
+        jack.classList.add('attack');
+        sound.play();
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2500);
       }
     }
 
