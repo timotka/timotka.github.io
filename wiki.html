@@ -3,138 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <title>TimothyVerse Wiki — Головна</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
-  background: black;
-  color: lime;
-  font-family: 'Share Tech Mono', monospace;
-  padding: 2rem;
-  line-height: 1.6;
-}
+      font-family: 'Roboto', sans-serif;
+      background: #f8f9fa;
+      color: #202122;
+      margin: 0;
+      padding: 0;
+    }
 
-h1, h2, h3 {
-  color: cyan;
-}
+    header {
+      background: #ffffff;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #a2a9b1;
+    }
 
-a {
-  color: deepskyblue;
-  text-decoration: none;
-}
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
 
-a:hover {
-  text-decoration: underline;
-}
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
 
-header {
-  background: #111;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid lime;
-  margin-bottom: 2rem;
-}
+    .section {
+      margin-bottom: 2rem;
+    }
 
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: cyan;
-}
+    h2 {
+      border-bottom: 1px solid #a2a9b1;
+      padding-bottom: 0.3rem;
+    }
 
-main {
-  max-width: 1000px;
-  margin: 0 auto;
-}
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
 
-.infobox,
-.featured {
-  border: 1px solid lime;
-  background-color: #111;
-  padding: 1rem;
-  margin: 1rem 0;
-  text-align: center;
-}
+    ul li {
+      margin-bottom: 0.3rem;
+    }
 
-.infobox img,
-.featured img {
-  max-width: 100%;
-  height: auto;
-  border: 1px solid #0f0;
-  margin-bottom: 0.5rem;
-}
+    a {
+      color: #0645ad;
+      text-decoration: none;
+    }
 
-.featured {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  text-align: left;
-}
+    a:hover {
+      text-decoration: underline;
+    }
 
-.featured-content {
-  flex: 1;
-}
+    .featured {
+      background: #e9f0f9;
+      border: 1px solid #a2a9b1;
+      padding: 1rem;
+      display: flex;
+      gap: 1rem;
+    }
 
-ul {
-  list-style: none;
-  padding-left: 0;
-}
+    .featured img {
+      max-width: 200px;
+      height: auto;
+      border: 1px solid #aaa;
+    }
 
-ul li {
-  margin-bottom: 0.3rem;
-}
+    .featured-content {
+      flex: 1;
+    }
 
-footer {
-  text-align: center;
-  font-size: 0.9rem;
-  color: lime;
-  padding: 2rem 0;
-  border-top: 1px dashed #0f0;
-  margin-top: 3rem;
-}
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      padding: 2rem 0;
+    }
 
-.nav-link {
-  margin-right: 1rem;
-  color: deepskyblue;
-}
+    .nav-link {
+      display: inline-block;
+      margin-right: 1rem;
+    }
   </style>
 </head>
 <body>
   <header>
-  <h1>TimothyVerse Wiki</h1>
-  <div class="header-nav">
-    <a class="nav-link" href="#">🏠 На головну</a> |
-    <a class="nav-link" href="#">🐱 Мурка Бобрівна</a>
-  </div>
-</header>
+    <h1>TimothyVerse Wiki</h1>
+    <nav>
+      <a class="nav-link" href="index.html">🏠 На головну</a>
+      <a class="nav-link" href="murka.html">🐱 Мурка Бобрівна</a>
+    </nav>
+  </header>
 
-<main>
-  <div class="featured">
-    <img src="murka.jpg" alt="Мурка">
-    <div class="featured-content">
-      <h2>✨ Стаття дня</h2>
-      <p><strong>Мурка Бобрівна</strong></p>
-      <p>
-        Напівбогиня у всесвіті TimothyVerse. Має здатність мурчати, але не говорить людською мовою.
-        Зникає раз на рік рівно на 42 секунди. Її походження — загадка, як і її порода.
-        Вперше з’явилася у 2019 році, й відтоді наглядає за порядком реальності... муркаючи.
-      </p>
-    </div>
-  </div>
+  <main>
+    <section class="section featured">
+      <img src="murka.jpg" alt="Мурка Бобрівна">
+      <div class="featured-content">
+        <h2>✨ Стаття дня</h2>
+        <h3><a href="murka.html">Мурка Бобрівна</a></h3>
+        <p>
+          Напівбогиня у всесвіті TimothyVerse. Має здатність мурчати, але не говорити людською мовою. Зникає раз на рік рівно на 42 секунди. Її походження — загадка, як і її порода.
+          Вперше з'явилася у 2019 році, й відтоді наглядає за порядком реальності... муркаючи.
+        </p>
+      </div>
+    </section>
 
-  <div class="section">
-    <h2>📚 Усі статті</h2>
-    <ul>
-      <li><a href="#">Мурка Бобрівна</a></li>
-      <li><a href="#">Тімоті</a></li>
-    </ul>
-  </div>
+    <section class="section">
+      <h2>📚 Усі статті</h2>
+      <ul>
+        <li><a href="murka.html">Мурка Бобрівна</a></li>
+        <li><a href="timothy-wiki.html">TimothyVerse Wiki</a></li>
+        <!-- Додай нові статті тут -->
+      </ul>
+    </section>
 
-  <div class="section">
-    <h2>🔍 Дослідження TimothyVerse</h2>
-    <p>Ще в розробці...</p>
-  </div>
-</main>
+    <section class="section">
+      <h2>🔍 Дослідження TimothyVerse</h2>
+      <p>Цей розділ Вікі присвячено вивченню всесвіту Тімотьки: персонажі, події, технології, теорії, загадки та муркотливі аномалії.</p>
+    </section>
+  </main>
 
-<footer>
-  © 2025 TimothyVerse Wiki
-</footer>
+  <footer>
+    Усе зроблено лапками Тімотьки 🐾 | © TimothyVerse, 2025
+  </footer>
 </body>
 </html>
