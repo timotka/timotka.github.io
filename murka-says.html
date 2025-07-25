@@ -79,7 +79,7 @@
         opacity: 0;
       }
       100% {
-        transform: translate(-50%, -50%) scale(2.5) rotate(360deg);
+        transform: translate(-50%, -50%) scale(3.5) rotate(720deg);
         opacity: 1;
       }
     }
@@ -96,7 +96,7 @@
     }
 
     #jackenstein.attack {
-      animation: jackensteinAttack 2s ease-in-out forwards;
+      animation: jackensteinAttack 1.2s ease-in-out forwards;
     }
   </style>
 </head>
@@ -123,13 +123,13 @@
     ];
 
     const murkaFaces = {
-      success: `   |\\__/|
+      success: `   |\__/|
   ( ^ w ^ )
    > ︶ <`,
-      fail:    `   |\\__/|
+      fail:    `   |\__/|
   ( >_< )
    > д <`,
-      idle:    `   |\\__/|
+      idle:    `   |\__/|
   ( @_@ )
    > ∀ <`
     };
@@ -222,11 +222,12 @@
         const jack = document.getElementById('jackenstein');
         const sound = document.getElementById('jackSound');
         jack.style.display = 'block';
-        jack.classList.add('attack');
+        sound.currentTime = 0;
         sound.play();
+        jack.classList.add('attack');
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 2500);
+        }, 1500);
       }
     }
 
