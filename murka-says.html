@@ -27,6 +27,7 @@
       display: inline-block;
       padding: 0.5rem;
       margin-bottom: 1rem;
+      min-width: 180px;
     }
 
     .command {
@@ -71,6 +72,32 @@
       font-size: 1.2rem;
       margin-top: 1rem;
     }
+
+    @keyframes jackensteinAttack {
+      0% {
+        transform: translate(-50%, -50%) scale(0.1) rotate(0deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(2.5) rotate(360deg);
+        opacity: 1;
+      }
+    }
+
+    #jackenstein {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 999;
+      display: none;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      opacity: 0;
+    }
+
+    #jackenstein.attack {
+      animation: jackensteinAttack 2s ease-in-out forwards;
+    }
   </style>
 </head>
 <body>
@@ -85,6 +112,9 @@
   </div>
   <div class="timer" id="timer">⏳ 5.0 сек</div>
 
+  <img id="jackenstein" src="youre-taking-too-long.png" alt="Jackenstein">
+  <audio id="jackSound" src="youre-taking-too-long.mp3"></audio>
+
   <script>
     const allActions = [
       'мурчати', 'дряпати', 'мяукати', 'стерегти',
@@ -93,9 +123,15 @@
     ];
 
     const murkaFaces = {
-      success: `   |\\__/|\n  ( ^ w ^ )  \n   > ︶ <`,
-      fail:    `   |\\__/|\n  ( >_< )  \n   > д <`,
-      idle:    `   |\\__/|\n  ( @_@ )  \n   > ∀ <`
+      success: `   |\\__/|
+  ( ^ w ^ )   < Мяу~
+   > ︶ <`,
+      fail:    `   |\\__/|
+  ( >_< )   < Мяу?!
+   > д <`,
+      idle:    `   |\\__/|
+  ( @_@ )   < Мяу...
+   > ∀ <`
     };
 
     let currentAction = '';
@@ -112,7 +148,6 @@
 
     function newCommand() {
       clearInterval(interval);
-
       if (lives <= 0) return;
 
       timerValue = 5.0;
@@ -180,6 +215,17 @@
         setTimeout(newCommand, 1500);
       } else {
         document.getElementById('command').innerText = '💀 Гру закінчено';
+
+        if (Math.random() < 0.1) {
+          const jack = document.getElementById('jackenstein');
+          const sound = document.getElementById('jackSound');
+          jack.style.display = 'block';
+          jack.classList.add('attack');
+          sound.play();
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 2500);
+        }
       }
     }
 
